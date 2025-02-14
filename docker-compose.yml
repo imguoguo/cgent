@@ -1,0 +1,15 @@
+name: "cgent"
+services:
+    cgent:
+        volumes:
+            - ./data:/app
+        container_name: cgent
+        restart: always
+        network_mode: host
+        cap_add:
+            - NET_RAW
+        environment:
+            - SECRET=agentsecretkey
+            - SERVER=installhost
+            - TLS=true
+        image: ghcr.io/imguoguo/cgent
