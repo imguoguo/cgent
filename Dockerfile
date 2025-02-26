@@ -1,20 +1,8 @@
-FROM riscv64/golang:alpine3.21 AS builder
-WORKDIR /root
-
-RUN apk add --no-cache git && \
-    git clone --depth=1 https://github.com/nezhahq/agent && \
-    cd agent && \
-    go generate ./... && \
-    cd cmd/agent && \
-    CGO_ENABLED=0 go build -v -trimpath -ldflags \
-    "-s -w -X github.com/nezhahq/agent/pkg/monitor.Version=1.7.3"
-
 FROM alpine:latest
-WORKDIR /app
 
-RUN apk add --no-cache util-linux
+RUN apk add --no-cache util-linux unzip
 
-COPY --from=builder /root/agent/cmd/agent/agent /cgent
+RUN wget https://github.com/nezhahq/agent/releases/download/v1.7.3/nezha-agent_linux_$(arch).zip && unzip nezha-agent_linux_$(arch).zip && rm nezha-agent_linux_$(arch).zip
 
 ENV SECRET=default_secret \
     SERVER=default_server \
