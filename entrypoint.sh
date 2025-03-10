@@ -11,4 +11,6 @@ EOF
 
 fi
 
-exec /nezha-agent -c="$CONFIG_FILE"
+chown -R nezha:nezha /app
+
+su nezha /bin/sh -c "exec /nezha-agent -c='$CONFIG_FILE'"

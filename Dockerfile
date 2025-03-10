@@ -13,4 +13,6 @@ ENV SECRET=default_secret \
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+RUN adduser -S nezha -G users -s /bin/sh
+
 ENTRYPOINT ["/entrypoint.sh"]
